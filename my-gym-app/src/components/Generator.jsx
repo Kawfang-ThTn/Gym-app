@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
 import { SCHEMES, WORKOUTS } from "../utilities/detail";
+import Button from './Button.jsx'
 
 function Header(props) {
   const { index, title, description } = props;
@@ -21,12 +22,12 @@ function Header(props) {
   );
 }
 
-function Generator() {
-  const [showModal, setShowModal] = useState(false);
-  const [poison, setPoison] = useState("individual");
-  const [muscles, setMuscles] = useState([]);
-  const [goals, setGoals] = useState("strength_power");
+function Generator(props) {
 
+  const {poison , setPoison , muscles , setMuscles , goals , setGoals , updateWorkout} = props
+
+  const [showModal, setShowModal] = useState(false);
+  
   function toggleModal() {
     setShowModal(!showModal);
   }
@@ -55,7 +56,7 @@ function Generator() {
 
   return (
     <>
-      <SectionWrapper
+      <SectionWrapper id={'generate'}
         header={"generate your workout"}
         title={["It's", "Huge", "o'clock"]}
       >
@@ -73,7 +74,7 @@ function Generator() {
                   setMuscles([])
                   setPoison(type);
                 }}
-                className={`bg-slate-950 border py-3 rounded-lg duration-200 ${
+                className={`bg-slate-950 border py-3 rounded-lg duration-200 px-4 hover:border-blue-600 ${
                   type === poison ? "border-green-600" : "border-blue-400"
                 }`}
                 key={typeIndex}
@@ -90,7 +91,7 @@ function Generator() {
           description={"Select the muscles judged for annihilation."}
         />
 
-        <div className="bg-slate-950  border border-solid border-blue-400 rounded-lg flex flex-col">
+        <div className="bg-slate-950  border border-solid px-4 border-blue-400 rounded-lg flex flex-col">
           <button
             onClick={toggleModal}
             className="relative p-3 flex items-center justify-center"
@@ -121,15 +122,15 @@ function Generator() {
           description={"Select your ultimate objective."}
         />
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-col-1 sm:grid-cols-3 gap-4">
           {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
             return (
               <button
                 onClick={() => {
                   setGoals(scheme);
                 }}
-                className={`bg-slate-950 border py-3 rounded-lg duration-200 ${
-                  scheme === goals ? "border-blue-600" : "border-blue-400"
+                className={`bg-slate-950 border py-3 rounded-lg duration-200 hover:border-blue-600 ${
+                  scheme === goals ? "border-green-600" : "border-blue-400"
                 }`}
                 key={schemeIndex}
               >
@@ -138,6 +139,7 @@ function Generator() {
             );
           })}
         </div>
+        <Button func={updateWorkout} text={"Formulate"} />
       </SectionWrapper>
     </>
   );
