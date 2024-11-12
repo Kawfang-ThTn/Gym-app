@@ -49,8 +49,7 @@ function Generator(props) {
     }
 
     setMuscles([...muscles , muscleGroup])
-    if (muscles.length === 2){
-    }
+
 
   }
 
